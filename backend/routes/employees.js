@@ -11,6 +11,14 @@ router.get('/',(req,res) => {
 })
 
 
+
+router.get('/:id',(req,res) => {
+    Employee.findById(req.params.id)
+      .then(exercise => res.json(exercise))
+      .catch(err => res.status(400).json('Error:' + err))
+})
+
+
 router.post('/',(req,res) => {
 
     const name = req.body.name;
@@ -30,48 +38,30 @@ router.post('/',(req,res) => {
       .catch(err => res.status(400).json('Error:' + err));
 })
 
-router.patch('/',(req,res) => {
-    
+router.patch('/:id',(req,res) => {
+    Employee.findById(req.params.id)
+        .then(employee => {
+            employee.name = req.body.name;
+            employee.dob = Date.parse(req.body.dob);
+            employee.gender = req.body.gender;
+            employee.salary = Number(req.body.salary)
+
+
+            employee.save()
+                .then(() => res.json('Employee Updated'))
+                .catch(err => res.status(400).json('Error:' + err))
+        })
+        .catch(err => res.status(400).json('Error:' + err))
 })
 
 
-router.delete('/',(req,res) => {
-    
+router.delete('/:id',(req,res) => {
+        Employee.findByIdAndDelete(req.params.id)
+            .then(() => res.json('Employee deleted'))
+            .catch(err => res.status(400).json('Error:' + err))
 })
 
 
 module.exports = router;
 
 
-
-
-
-
-// const express = require('express')
-// const mongoose = require('mongoose')
-// const Employee = require('../models/employee.model')
-
-// const router = express.Router();
-
-// router.get('/',(req,res) => {
-//     Employee.find()
-//         .then(employees => res.json(employees))
-//         .catch(err => res.status(400).json('Error:' + err))
-// })
-
-
-// router.post('/',(req,res) => {
-//     const employee = new Employee({
-//         name:req.body.name,
-//         dob:req.body.dob,
-//         gender:req.body.gender,
-//         salary:req.body.salary
-//     })
-    
-
-//     employee.save()
-//             .then(() => res.json('newm employee added'))
-//             .catch(err => res.status(400))
-// })
-
-// module.exports  = router
