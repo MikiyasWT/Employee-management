@@ -1,19 +1,18 @@
 const express = require('express');
 const { getEmployees,getEmployee, addEmployee,editEmployee, removeEmployee  } = require('../controllers/employees');
 const router = express.Router();
+const verify = require('../middleware/verifyToken')
 
-let Employee = require('../models/employee.model')
 
+router.get('/',verify,getEmployees)
 
-router.get('/',getEmployees)
+router.get('/:id',verify, getEmployee)
 
-router.get('/:id',getEmployee)
+router.post('/',verify,addEmployee)
 
-router.post('/',addEmployee)
+router.patch('/:id',verify, editEmployee)
 
-router.patch('/:id',editEmployee)
-
-router.delete('/:id',removeEmployee)
+router.delete('/:id',verify, removeEmployee)
 
 
 module.exports = router;

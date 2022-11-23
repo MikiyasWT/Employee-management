@@ -3,6 +3,7 @@ const cors = require('cors')
 const bodyparser = require('body-parser')
 const mongoose= require('mongoose');
 const employeesRouter = require('./routes/employees')
+const usersRouter = require('./routes/auth')
 require('dotenv').config()
 
 
@@ -14,9 +15,13 @@ app.use(bodyparser.json())
 app.use(cors())
 
 app.use('/employees',employeesRouter)
+app.use('/api/auth',usersRouter)
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri,{useNewUrlParser:true})
+mongoose.connect(uri,
+    {useNewUrlParser:true},
+    {useCreateIndex:true},
+    {autoIndex: true})
 
 const connection = mongoose.connection;
 
