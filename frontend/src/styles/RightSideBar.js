@@ -11,8 +11,6 @@ z-index:100;
 display:flex;
 overflow-y: hidden;
 justify-content:flex-end;
-
-
 `;   
 
 export const SideBarStyle = Styled.div`
@@ -22,19 +20,25 @@ overflow-y: auto;
 overflow-x: hidden;
 position:relative;
 margin:0rem 0rem;
-padding:0rem 1rem;
+padding:2rem 1rem;
+background:slateblue;
+
+
 `;
 
 export const AddingForm = Styled.div`
 display:flex;
+height:auto;
 justify-content:space-between;
 border-radius:1rem;
 overflow: hidden;
 background:white;
 padding:1rem;
-margin:1rem 0rem;
-height:auto;
+margin:0rem 0.5rem;
 
+form {
+    width:100%;
+}
 
 img {
     width: 8rem;

@@ -5,12 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {configureStore} from "@reduxjs/toolkit";
 import {Provider} from "react-redux";
-import  sideBarSliceReducer  from './features/sideBar';
-
+import sideBarReducer from "./features/sideBar"
 
 const store = configureStore({
   reducer: {
-    showSideBar:sideBarSliceReducer
+    showSideBar:sideBarReducer
   }
 })
 
