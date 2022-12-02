@@ -8,7 +8,6 @@ align-items:center;
 font-size:1rem;
 background: #282c34;
 padding: 10px;
-
 a{
     font-size:1.2rem;
     
@@ -40,7 +39,8 @@ h3 {
 }
 
 svg {
-    font-size:1.5rem;
+    font-size:1rem;
+    
 }
 
 span {
@@ -63,6 +63,6 @@ a{
     font-size:1.2rem;
     color: white;
     text-decoration:none;
-    margin: 0px 5px;
+    margin: 0px 15px;
 }
 `; 

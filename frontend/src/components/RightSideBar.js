@@ -1,7 +1,9 @@
 import { useDispatch ,useSelector} from "react-redux/es/exports";
-import {RightSideBarWrapper,SideBarStyle,AddingForm,FormDiv} from "../styles/RightSideBar"
+import {RightSideBarWrapper,SideBarStyle,AddingForm,FormDiv,FormLabels} from "../styles/RightSideBar"
 import {showSideBar} from "../features/sideBar"
 import styled from 'styled-components'
+import {useFormik} from "formik"
+import * as Yup from "yup"
 
 const FormButtons = styled.button`
     background:${props => props.color};
@@ -77,6 +79,42 @@ export default function SideBar(){
     const dispatch = useDispatch();
     const sidebarStatus = useSelector((state) => state.showSideBar.value)
     console.log(sidebarStatus)
+
+    //form handling with formik and yup validation
+    const formik = useFormik({
+      initialValues: {
+        name:"",
+        dob:"",
+        gender:"Male",
+        salary:9000
+      },
+
+      validationSchema: Yup.object({
+         name:Yup.string()
+                 .max(20,"Name can't exceed 20 characters")
+                 .min(4,"Name can't be lessthan 4 characters")
+                 .required("Name is required"),
+         dob:Yup.date()
+                .required(),
+         gender:Yup.string()
+                    .default("Male")
+                    .required(),
+         salary:Yup.number()
+                  .min(9000,"Net Salary can't be less than 9000birr")
+                  .max(78000,"Net salary can't exceed 78000 birr company scale")
+                  .required()                          
+      }),
+
+      //on form submission
+      onSubmit:(values) => {
+        console.log(formik.values)
+       },
+    })
+
+   
+    
+
+     console.log(formik.errors)
     return( 
     <RightSideBarWrapper onClick={() => {dispatch(showSideBar())}}>
         
@@ -88,34 +126,50 @@ export default function SideBar(){
             
         <AddingForm>
 
-            <form method="post">
+            <form method="post" onSubmit={formik.handleSubmit}>
              <InputDiv>
                 <div>
-                  <label>Employee Name</label>
+                  <FormLabels htmlFor="name" color={formik.touched.name && formik.errors.name? "red":"black"}>{formik.touched.name && formik.errors.name?formik.errors.name:'Employee Name'}</FormLabels>
                 </div>
                 <div>
-                  <input type="text" placeholder="Name" required/>
+                  <input type="text"
+                   name="name"
+                   placeholder="Enter Employee Name"
+                   value={formik.values.name}
+                   onChange={formik.handleChange}
+                   onBlur={formik.handleBlur}
+                   required/>
                 </div>
              </InputDiv>  
 
             <InputDiv>
                 <div>
-                  <label>Date of Birth</label>
+                  <FormLabels htmlFor="dob" color={formik.touched.dob && formik.errors.dob? "red":"black"}>{formik.touched.dob && formik.errors.dob?formik.errors.dob:'Date of Birth'}</FormLabels>
                 </div>
                 <div>
-                  <input type="Date" placeholder="Name" required/>
+                  <input type="Date"
+                   name="dob"
+                   placeholder="Employee Date of Birth"
+                   value={formik.values.dob}
+                   onChange={formik.handleChange}
+                   onBlur={formik.handleBlur}
+                   required/>
                 </div>
              </InputDiv>
 
 
             <InputDiv>
                 <div>
-                  <label>Gender</label>
+                  <FormLabels htmlFor="gender" color={formik.touched.gender && formik.errors.gender? "red":"black"}>{formik.touched.gender && formik.errors.gender?formik.errors.gender:'Gender'}</FormLabels>
                 </div>
                 <div>
 
                 
-                <select required defaultValue='male'>Gender
+                <select
+                 value={formik.values.gender}
+                 onChange={formik.handleChange}
+                 required
+                 name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
@@ -125,10 +179,16 @@ export default function SideBar(){
 
             <InputDiv>
                 <div>
-                   <label>Salary</label>
+                   <FormLabels htmlFor="salary" color={formik.touched.salary && formik.errors.salary? "red":"black"} >{formik.touched.salary && formik.errors.salary?formik.errors.salary:'Salary'}</FormLabels>
                 </div>
                 <div>
-                   <input type="Number" placeholder="Name" required/>
+                   <input type="Number"
+                    name="salary"
+                    placeholder="Employee's Salary"
+                    value={formik.values.salary}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    required/>
                 </div>
              </InputDiv>
 

@@ -46,8 +46,16 @@ img {
 }
 
 
+
 `;
 
+
+export const FormLabels = Styled.label`
+
+    color:${props => props.color};
+
+
+`
 
 export const FormDiv = Styled.div`
 width:100%;
