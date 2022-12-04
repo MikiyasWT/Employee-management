@@ -4,6 +4,7 @@ import {showSideBar} from "../features/sideBar"
 import styled from 'styled-components'
 import {useFormik} from "formik"
 import * as Yup from "yup"
+import {HIDE_SIDE_BAR} from "../redux/types"
 
 const FormButtons = styled.button`
     background:${props => props.color};
@@ -77,7 +78,7 @@ h3 {
 export default function SideBar(){
 
     const dispatch = useDispatch();
-    const sidebarStatus = useSelector((state) => state.showSideBar.value)
+    const sidebarStatus = useSelector((state) => state.sideBar)
     console.log(sidebarStatus)
 
     //form handling with formik and yup validation
@@ -106,8 +107,9 @@ export default function SideBar(){
       }),
 
       //on form submission
-      onSubmit:(values) => {
+      onSubmit:(values,{resetForm}) => {
         console.log(formik.values)
+        resetForm({values:''})
        },
     })
 
@@ -116,7 +118,7 @@ export default function SideBar(){
 
      console.log(formik.errors)
     return( 
-    <RightSideBarWrapper onClick={() => {dispatch(showSideBar())}}>
+    <RightSideBarWrapper onClick={() => {dispatch(showSideBar(HIDE_SIDE_BAR))}}>
         
         <SideBarStyle onClick={(e)=>e.stopPropagation()}>          
            
@@ -126,7 +128,7 @@ export default function SideBar(){
             
         <AddingForm>
 
-            <form method="post" onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
              <InputDiv>
                 <div>
                   <FormLabels htmlFor="name" color={formik.touched.name && formik.errors.name? "red":"black"}>{formik.touched.name && formik.errors.name?formik.errors.name:'Employee Name'}</FormLabels>

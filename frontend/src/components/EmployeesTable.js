@@ -1,7 +1,9 @@
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import {FaFemale,FaMale,FaPowerOff,FaPlusCircle,FaTrash,FaUserCircle,FaUserEdit} from 'react-icons/fa'
 import {showSideBar} from "../features/sideBar"
 import { useDispatch,useSelector } from "react-redux/es/exports";
+import { getEmployees } from '../redux/actions/employees'
 
 
 
@@ -33,12 +35,15 @@ const TableWrapper = styled.div`
 
 tfoot > tr > td {
   border-top:solid grey 2px;
+  
 }
 
   tbody > tr > td {
     padding:0.5rem 4rem;
     border-top:solid grey 1px;
     color:white;
+    text-transform:uppercase;
+    font-size:11px;
   }
 `;
 
@@ -55,14 +60,24 @@ export const FormButtons = styled.button`
     border-radius:3px;
     max-height:1vh;
    
-   
   `;
 
-//<FontAwesomeIcon  icon="fa-solid fa-user-pen"  />
+
 
 export default function EmployeesTable(){
-  const dispatch = useDispatch();
+  
+  const dispatch = useDispatch()
+  const employees = useSelector(state => state.employees.employees)
+
+  const loading = useSelector(state => state.employees.loading)
+  const error = useSelector(state => state.employees.error)
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, [dispatch])
+
+
     return(
+      <>
       <TableWrapper>
        <table>
         <thead>
@@ -76,77 +91,23 @@ export default function EmployeesTable(){
           </tr>
         </thead>
           <tbody>
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
+          { employees.length === 0 ? <p>No Employees</p> : null }
+          { employees.length === 0 && loading === true ? <p>Loading...</p> : null }
+          { error === 0 && !loading === true ? <p>{error.message}</p> : null }
+           {
+            employees != null && employees.map((employee,index) => (
+            <tr key={index}>
+              <td>{employee.name}</td>
+              <td>{employee.gender}</td>
+              <td>{employee.dob}</td>
+              <td>{employee.salary}</td>
+              <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
+              <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
+           </tr>
+            ))
+           }
 
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
-
-            <tr>
-                <td>abebe</td>
-                <td>MALE</td>
-                <td>1989898787</td>
-                <td>14545</td>
-                <td><FormButtons color="blue" onClick={() => {dispatch(showSideBar())}}><span><FaUserEdit /></span></FormButtons></td>
-                <td><FormButtons color="red"><span><FaTrash /></span></FormButtons></td>
-            </tr>
+            
           </tbody>
 
          <tfoot>
@@ -163,5 +124,6 @@ export default function EmployeesTable(){
        
        </table>
       </TableWrapper>
+     </> 
     );
 }
