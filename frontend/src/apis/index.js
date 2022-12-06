@@ -1,9 +1,9 @@
 import axios from "axios"
 
-axios.default.baseurl = "http://localhost:5000"
-
-
-export const getEmployeese = async () => axios.get('/employees')
+//axios.default.baseurl = 'http://localhost:5000'
+const baseurl = 'http://localhost:5000/employees'
+//http://localhost:5000/employees
+export const getEmployees = async () => axios.get(baseurl)
 
 export const getEmployeeById = async (id) => axios.get('/employees/${id}')
 

@@ -4,8 +4,18 @@ import * as types from "../types"
 export function getEmployees(employees) {
  return {
   type: types.GET_EMPLOYEES_REQUESTED,
-  payload: employees,
  }
+}
+
+
+
+
+export function addEmployee(employee){
+    return {
+            type:types.ADD_NEW_EMPLOYEE_REQUESTED,
+            payload:employee,
+        }
+
 }
 
 

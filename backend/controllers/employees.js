@@ -18,17 +18,18 @@ let Employee = require('../models/employee.model')
 //   const {error} = employeeValidation(req.body)
 //   if(error) return res.status(422).send(error.details[0].message)
 
-    const name = req.body.name;
-    const  dob = Date.parse(req.body.dob);
-    const gender = req.body.gender;
-    const salary =  Number(req.body.salary);
-
-    const newEmployee = new Employee({
-        name,
-        dob,
-        gender,
-        salary
-    });
+    // const name = req.body.name;
+    // const  dob = req.body.dob;
+    // const gender = req.body.gender;
+    // const salary =  req.body.salary;
+    console.log(req.body)
+    const {name, dob, gender, salary} = req.body
+    const body = req.body
+    console.log(name)
+    console.log(dob)
+    console.log(gender)
+    console.log(salary)
+    const newEmployee = new Employee(body);
 
     await newEmployee.save()
       .then(() => res.json('New Employee Added'))

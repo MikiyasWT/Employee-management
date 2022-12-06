@@ -5,25 +5,26 @@ import SideBar from "./RightSideBar";
 //import {showSideBar} from "../features/sideBar"
 import { useDispatch,useSelector } from "react-redux/es/exports";
 import {FaFemale,FaMale,FaPowerOff,FaPlusCircle,FaTrash,FaUserCircle,FaUserEdit} from 'react-icons/fa'
-//import {showSideBar} from "../redux/reducers/sideBar"
-import store from "../redux/store"
+import {showSideBar} from "../redux/actions/sideBar"
 
 
 
 export default function Nav(){
-  const isShowSideBarTrue = useSelector((state) => state.sideBar.sideBar)
-  console.log(isShowSideBarTrue)
+  
+
   const dispatch = useDispatch();
+  const sidebarStatus = useSelector((state) => state.sideBar.sideBar)
+  
   return(
         <NavStyles>
           <h3>Employee Management </h3>
           <NavItems>
-            <a href="#" ><FaPlusCircle /> Employee</a>
+            <a href="#" onClick={() => {dispatch(showSideBar(sidebarStatus))}}><FaPlusCircle /> Employee</a>
             <a><FaPowerOff /></a>
           </NavItems>
          
           {
-            isShowSideBarTrue && <SideBar />
+            sidebarStatus && <SideBar />
           }
         </NavStyles>
     );

@@ -1,7 +1,7 @@
 import * as type from '../types';
 
 const initialState = {
- sideBar:true
+ sideBar:false
 }
 
  
@@ -9,11 +9,6 @@ const initialState = {
 export default function sideBar(state=initialState, action) {
   switch (action.type) {
     case type.SHOW_SIDE_BAR:
-      return {
-        ...state,
-        sideBar: !state.sideBar
-      }
-    case type.HIDE_SIDE_BAR:
       return {
         ...state,
         sideBar: !state.sideBar

@@ -73,7 +73,7 @@ export default function EmployeesTable(){
   const error = useSelector(state => state.employees.error)
   useEffect(() => {
     dispatch(getEmployees());
-  }, [dispatch])
+  }, [dispatch,employees])
 
 
     return(

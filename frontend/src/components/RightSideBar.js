@@ -1,10 +1,12 @@
 import { useDispatch ,useSelector} from "react-redux/es/exports";
 import {RightSideBarWrapper,SideBarStyle,AddingForm,FormDiv,FormLabels} from "../styles/RightSideBar"
-import {showSideBar} from "../features/sideBar"
+
 import styled from 'styled-components'
 import {useFormik} from "formik"
 import * as Yup from "yup"
 import {HIDE_SIDE_BAR} from "../redux/types"
+import {showSideBar} from "../redux/actions/sideBar"
+import {addEmployee} from "../redux/actions/employees"
 
 const FormButtons = styled.button`
     background:${props => props.color};
@@ -79,14 +81,13 @@ export default function SideBar(){
 
     const dispatch = useDispatch();
     const sidebarStatus = useSelector((state) => state.sideBar)
-    console.log(sidebarStatus)
 
     //form handling with formik and yup validation
     const formik = useFormik({
       initialValues: {
         name:"",
         dob:"",
-        gender:"Male",
+        gender:"male",
         salary:9000
       },
 
@@ -95,10 +96,10 @@ export default function SideBar(){
                  .max(20,"Name can't exceed 20 characters")
                  .min(4,"Name can't be lessthan 4 characters")
                  .required("Name is required"),
-         dob:Yup.date()
+         dob:Yup.string()
                 .required(),
          gender:Yup.string()
-                    .default("Male")
+                    .default("male")
                     .required(),
          salary:Yup.number()
                   .min(9000,"Net Salary can't be less than 9000birr")
@@ -108,17 +109,18 @@ export default function SideBar(){
 
       //on form submission
       onSubmit:(values,{resetForm}) => {
-        console.log(formik.values)
+        //console.log(formik.values)
+        const employee = [];
+        employee.push(values);
+        dispatch(addEmployee(employee[0]))
+       
         resetForm({values:''})
        },
+
     })
 
-   
-    
-
-     console.log(formik.errors)
     return( 
-    <RightSideBarWrapper onClick={() => {dispatch(showSideBar(HIDE_SIDE_BAR))}}>
+    <RightSideBarWrapper onClick={() => {dispatch(showSideBar(sidebarStatus))}}>
         
         <SideBarStyle onClick={(e)=>e.stopPropagation()}>          
            
@@ -140,7 +142,7 @@ export default function SideBar(){
                    value={formik.values.name}
                    onChange={formik.handleChange}
                    onBlur={formik.handleBlur}
-                   required/>
+                   />
                 </div>
              </InputDiv>  
 
@@ -155,7 +157,7 @@ export default function SideBar(){
                    value={formik.values.dob}
                    onChange={formik.handleChange}
                    onBlur={formik.handleBlur}
-                   required/>
+                   />
                 </div>
              </InputDiv>
 
@@ -184,13 +186,13 @@ export default function SideBar(){
                    <FormLabels htmlFor="salary" color={formik.touched.salary && formik.errors.salary? "red":"black"} >{formik.touched.salary && formik.errors.salary?formik.errors.salary:'Salary'}</FormLabels>
                 </div>
                 <div>
-                   <input type="Number"
+                   <input
                     name="salary"
                     placeholder="Employee's Salary"
                     value={formik.values.salary}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    required/>
+                    />
                 </div>
              </InputDiv>
 
