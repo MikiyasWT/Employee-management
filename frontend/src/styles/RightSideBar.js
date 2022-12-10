@@ -1,6 +1,8 @@
 import Styled from "styled-components"
+const  {motion} = require('framer-motion')
+
 //background:rgba(0,0,0,0.4);
-export const RightSideBarWrapper = Styled.div`
+export const RightSideBarWrapper = Styled(motion.div)`
 position:fixed;
 right:0;
 top:0;
@@ -15,7 +17,7 @@ justify-content:flex-end;
 
 `;   
 
-export const SideBarStyle = Styled.div`
+export const SideBarStyle = Styled(motion.div)`
 width: 30%;
 background:#f1f1f1;
 overflow-y: auto;
@@ -47,7 +49,7 @@ background:slateblue;
 
 `;
 
-export const AddingForm = Styled.div`
+export const AddingForm = Styled(motion.div)`
 display:flex;
 height:auto;
 justify-content:space-between;

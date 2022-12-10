@@ -19,7 +19,7 @@ export default function Nav(){
           <h3>Employee Management </h3>
           <NavItems>
             <a href="#" onClick={() => {dispatch(showSideBar(sidebarStatus))}}><FaPlusCircle /> Employee</a>
-            <a><FaPowerOff /></a>
+            <a><FaPowerOff /> Logout</a>
           </NavItems>
           {
             editSideBarStatus && <EditSideBar />

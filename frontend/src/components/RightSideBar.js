@@ -120,9 +120,18 @@ export default function SideBar(){
     })
 
     return( 
-    <RightSideBarWrapper onClick={() => {dispatch(showSideBar(sidebarStatus))}}>
+    <RightSideBarWrapper 
+              animate={{opacity:1}}
+              initial={{opacity:0 }}
+              exit={{opacity:0}}
+              onClick={() => {dispatch(showSideBar(sidebarStatus))}}>
         
-        <SideBarStyle onClick={(e)=>e.stopPropagation()}>          
+        <SideBarStyle 
+            initial={{x:'50%'}}
+            animate={{x:'0%'}}
+            transition={{type:"tween"}}
+            exit={{x:'50%'}}
+            onClick={(e)=>e.stopPropagation()}>          
            
            <Title>
              <h3>Add an Employee</h3>

@@ -1,5 +1,7 @@
 import * as type from '../types';
 
+
+
 const initialState = {
  sideBar:false,
 }

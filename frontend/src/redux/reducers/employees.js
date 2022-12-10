@@ -1,4 +1,6 @@
 import * as type from '../types';
+import IEmployee from './interfaceTypes'
+
 
 const initialState = {
  employees: [],
@@ -6,7 +8,6 @@ const initialState = {
  loading: false,
  error: null
 }
-
 
 
 export default function employees(state=initialState, action) {

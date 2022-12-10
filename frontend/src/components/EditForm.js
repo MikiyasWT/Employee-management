@@ -128,9 +128,18 @@ export default function EditSideBar(){
     })
 
     return( 
-    <RightSideBarWrapper onClick={() => {dispatch(showEditSideBar(editSideBarStatus))}}>
+    <RightSideBarWrapper 
+              animate={{opacity:1}}
+              initial={{opacity:0 }}
+              exit={{opacity:0}}
+              onClick={() => {dispatch(showEditSideBar(editSideBarStatus))}}>
        
-        <SideBarStyle onClick={(e)=>e.stopPropagation()}>          
+        <SideBarStyle 
+            initial={{x:'50%'}}
+            animate={{x:'0%'}}
+            transition={{type:"tween"}}
+            exit={{x:'50%'}}
+            onClick={(e)=>e.stopPropagation()}>          
            
            <Title>
              <h3>Update Employee</h3>

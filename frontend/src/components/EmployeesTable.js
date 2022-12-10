@@ -91,7 +91,10 @@ export const FormButtons = styled.button`
    
   `;
 
-
+  export const LoadingEffectConatiner = styled.div`
+  position:absolute;
+  left:40%;
+  `;
 
 export default function EmployeesTable(){
   
@@ -123,15 +126,15 @@ export default function EmployeesTable(){
         </thead>
           <tbody>
           
-          { employees.length === 0 && loading === true ? <ReactLoading type="spin" color="#0000FF" 
-          height={1000} width={500} />: null }
+          { employees.length === 0 && loading === true ? <LoadingEffectConatiner><ReactLoading type="spin" color="#0000FF" 
+          height={100} width={300} /></LoadingEffectConatiner>: null }
           { error === 0 && !loading === true ? <p>{error.message}</p> : null }
            {
             employees != null && employees.map((employee,index) => (
             <tr key={index}>
               <td>{employee.name}</td>
               <td>{employee.gender}</td>
-              <td>{employee.dob}</td>
+              <td>{employee.dob.substr(0,10)}</td>
               <td>{employee.salary}</td>
               <td><FormButtons color="blue" onClick={() => {dispatch(showEditSideBar(editSideBarStatus,employee))}}><span><FaUserEdit /></span></FormButtons></td>
               <td><FormButtons color="red" onClick={() => {dispatch(deleteEmployee(employee))}}><span><FaTrash /></span></FormButtons></td>
