@@ -18,11 +18,35 @@ export function addEmployee(employee){
 
 }
 
+export function getSingleEmployee(id){
+    
+    return{
+        type:types.GET_EMPLOYEE_BY_ID_REQUESTED,
+        payload: id,
+      }
 
-// export function getEmployeeById(employees)
-// {
-//     return {
-//         type:types.GET_EMPLOYEE_BY_ID_REQUESTED,
-//         payload:employees,
-//     }
-// }
+}
+
+
+export function updateEmployee(employee) {
+   
+    return {
+        type:types.UPPDATE_EMPLOYEE_BY_ID_REQUESTED,
+        payload:employee
+    }
+}
+
+
+export function deleteEmployee(employee) {
+   
+    return {
+        type:types.DELETE_EMPLOYEE_BY_ID_REQUESTED,
+        payload:employee
+    }
+}
+
+
+
+
+
+

@@ -53,7 +53,68 @@ export default function employees(state=initialState, action) {
           error: action.message
       }
 
-    default:
-      return state;
+
+  
+
+      case type.UPPDATE_EMPLOYEE_BY_ID_REQUESTED:
+        let employeeToBeUppdated = action.payload
+        
+        return {
+        ...state,
+        loading:true,
+        employee:state.employees.filter(e => (e === employeeToBeUppdated ? employeeToBeUppdated:e))
+
+        }  
+
+      case type.UPPDATE_EMPLOYEE_BY_ID_SUCCESS: 
+        return {
+            ...state,
+            loading: false,
+            employees: [...employees,action.payload.values],
+            
+        } 
+        
+        case type.UPPDATE_EMPLOYEE_BY_ID_FAILED: 
+        return {
+          ...state,
+          loading: false,
+          error: action.message
+      } 
+
+      case type.DELETE_EMPLOYEE_BY_ID_REQUESTED:
+        let employeeToBeDeleted
+        return {
+          ...state,
+          loading:true,
+          employee:state.employees.filter(e => (e !== employeeToBeDeleted ? employeeToBeDeleted:e))
+        }
+
+      default:
+        return state;
   }
 }
+
+
+//employee:employees.find(e => (e === employeeToBeUppdated ? employeeToBeUppdated:e))
+
+// case GET_SINGLE_PRODUCT: {
+//   return {
+//       ...state,
+//       productList: [...action.payload],
+//   }
+// }
+
+
+
+// case DELETE_EMPLOYEE_BY_ID: {
+//   return {
+//       ...state,
+//       productList: [...action.payload],
+//   }
+// }
+// case UPDATE_PRODUCT: {
+//   return {
+//       ...state,
+//       productList: [...action.payload.values],
+//   }
+// }

@@ -21,6 +21,13 @@ a{
 h3{
     color: white;
 }
+
+@media only screen and (max-width: 700px) {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    padding: 10px;
+    }
 `;
 
 export const FooterItems = Styled.div`

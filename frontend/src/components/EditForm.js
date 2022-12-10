@@ -1,12 +1,10 @@
 import { useDispatch ,useSelector} from "react-redux/es/exports";
 import {RightSideBarWrapper,SideBarStyle,AddingForm,FormDiv,FormLabels} from "../styles/RightSideBar"
-
 import styled from 'styled-components'
 import {useFormik} from "formik"
 import * as Yup from "yup"
-import {HIDE_SIDE_BAR} from "../redux/types"
-import {showSideBar} from "../redux/actions/sideBar"
-import {addEmployee} from "../redux/actions/employees"
+import {showEditSideBar} from "../redux/actions/editSideBar"
+import {updateEmployee} from "../redux/actions/employees"
 
 const FormButtons = styled.button`
     background:${props => props.color};
@@ -77,18 +75,28 @@ h3 {
 `
 
 
-export default function SideBar(){
+export default function EditSideBar(){
+    //const employee =  useSelector(state => state.editSideBar.employeeInfo)
+    const employee = useSelector(state => state.editSideBar.employeeInfo)
+
+    const id = employee.employeeInfo._id
+    
+    const name = employee.employeeInfo.name
+    const dob = employee.employeeInfo.dob
+
+    const gender = employee.employeeInfo.gender
+    const salary = employee.employeeInfo.salary
 
     const dispatch = useDispatch();
-    const sidebarStatus = useSelector((state) => state.sideBar)
-
+    const editSideBarStatus = useSelector(state => state.editSideBar.editSideBar)
     //form handling with formik and yup validation
     const formik = useFormik({
       initialValues: {
-        name:"",
-        dob:"",
-        gender:"male",
-        salary:9000
+        _id:id,
+        name:name,
+        dob:new Date(dob),
+        gender:gender,
+        salary:salary
       },
 
       validationSchema: Yup.object({
@@ -109,23 +117,24 @@ export default function SideBar(){
 
       //on form submission
       onSubmit:(values,{resetForm}) => {
-        
         const employee = [];
         employee.push(values);
-        dispatch(addEmployee(employee[0]))
-       
-        resetForm({values:''})
+        //dispatch(updateEmployee(employee[0]))
+        dispatch(updateEmployee(employee[0]))
+        dispatch(showEditSideBar(editSideBarStatus))
+        resetForm({values:{name:'',salary:0}})
        },
 
     })
 
     return( 
-    <RightSideBarWrapper onClick={() => {dispatch(showSideBar(sidebarStatus))}}>
-        
+    <RightSideBarWrapper onClick={() => {dispatch(showEditSideBar(editSideBarStatus))}}>
+       
         <SideBarStyle onClick={(e)=>e.stopPropagation()}>          
            
            <Title>
-             <h3>Add an Employee</h3>
+             <h3>Update Employee</h3>
+            
            </Title>
             
         <AddingForm>
@@ -199,7 +208,7 @@ export default function SideBar(){
 
              <ButtonsContainer>
                   <FormButtons type="reset" color="red" >reset</FormButtons>
-                  <FormButtons type="submit" color="green">Add</FormButtons>
+                  <FormButtons type="submit" color="green">Update</FormButtons>
              </ButtonsContainer>
 
 

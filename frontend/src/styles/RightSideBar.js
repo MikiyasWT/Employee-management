@@ -11,6 +11,8 @@ z-index:100;
 display:flex;
 overflow-y: hidden;
 justify-content:flex-end;
+
+
 `;   
 
 export const SideBarStyle = Styled.div`
@@ -23,6 +25,25 @@ margin:0rem 0rem;
 padding:2rem 1rem;
 background:slateblue;
 
+@media only screen and (max-width: 700px) {
+  width:60%;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width:80%;
+    }
+
+    @media only screen and (max-width: 300px) {
+        width:100%;
+    }
+
+    @media only screen and (max-width: 300px) {
+        width:100%;
+    }
+
+    @media only screen and (max-width: 300px) {
+        width:100%;
+    }
 
 `;
 

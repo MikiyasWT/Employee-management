@@ -2,6 +2,7 @@ import Styled from "styled-components";
 
 export const NavStyles = Styled.div`
 min-height:15vh;
+max-width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -15,6 +16,13 @@ a{
 
 h3{
     color: white;
+}
+
+@media only screen and (max-width: 700px) {
+display:flex;
+flex-direction:column;
+padding:2px 4px;
+
 }
 `;
 
@@ -64,5 +72,29 @@ a{
     color: white;
     text-decoration:none;
     margin: 0px 15px;
+}
+
+@media only screen and (max-width: 700px) {
+    display: flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:space-around;
+    cursor:pointer;
+
+    div {
+        
+        display: flex;
+        flex-direction:column;
+        position:relative;
+    
+    }
+
+    a{
+        font-size:1.2rem;
+        color: white;
+        text-decoration:none;
+        margin: 10px 10px;
+    }
+
 }
 `; 

@@ -1,4 +1,5 @@
 let Employee = require('../models/employee.model')
+const {employeeValidation} = require('../validation/employeesValidation')
 
  const getEmployees = async (req,res) => {
     await Employee.find()
@@ -15,20 +16,13 @@ let Employee = require('../models/employee.model')
 
  const addEmployee = async (req,res) => {
     
-//   const {error} = employeeValidation(req.body)
-//   if(error) return res.status(422).send(error.details[0].message)
+const {error} = employeeValidation(req.body)
+if(error) return res.status(422).send(error.details[0].message)
 
-    // const name = req.body.name;
-    // const  dob = req.body.dob;
-    // const gender = req.body.gender;
-    // const salary =  req.body.salary;
-    console.log(req.body)
+   
     const {name, dob, gender, salary} = req.body
     const body = req.body
-    console.log(name)
-    console.log(dob)
-    console.log(gender)
-    console.log(salary)
+
     const newEmployee = new Employee(body);
 
     await newEmployee.save()
@@ -55,19 +49,6 @@ let Employee = require('../models/employee.model')
 
     res.send(updatedEmployee);
 
-    // await Employee.findById(req.params.id)
-    //     .then(employee => {
-    //         employee.name = req.body.name;
-    //         employee.dob = Date.parse(req.body.dob);
-    //         employee.gender = req.body.gender;
-    //         employee.salary = Number(req.body.salary)
-
-
-    //         employee.save()
-    //             .then(() => res.json('Employee Updated'))
-    //             .catch(err => res.status(400).json('Error:' + err))
-    //     })
-    //     .catch(err => res.status(400).json('Error:' + err))
 }
 
 
