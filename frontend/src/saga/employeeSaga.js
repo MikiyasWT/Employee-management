@@ -2,10 +2,10 @@ import axios from "axios";
 //import {getEmployees,getEmployeeById,addEmployee,updateEmployee,deleteEmployee} from "../apis/index"
 import { call, put, takeEvery,StrictEffect } from 'redux-saga/effects';
 //const apiUrl = 'https://jsonplaceholder.typicode.com/users';
-const apiUrl = 'http://localhost:5000/employees'
+const apiUrl = 'http://localhost:8080/employees'
 
-function getListOfEmployees() {
-    return fetch(apiUrl).then(response => response.json().catch(error => error));
+async function getListOfEmployees() {
+    return await fetch(apiUrl).then(response => response.json().catch(error => error));
 }
 function deleteEmployeeByIdApi(employee){
     
@@ -37,7 +37,7 @@ function addNewEmployee(employee){
             dob:employee.dob,
             gender:employee.gender,
             salary:employee.salary}),
-         headers: {
+            headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
           }, 
@@ -86,7 +86,9 @@ function* registerNewEmployee(action){
     try {
         const addedEmployee = yield call(addNewEmployee(employee));
         //const employees = yield call(getListOfEmployees);
-        yield put({ type: 'ADD_NEW_EMPLOYEE_SUCCESS', employee: addedEmployee });
+        yield put({ type: 'ADD_NEW_EMPLOYEE_SUCCESS', employee: employee });
+        //yield put({ type: 'GET_EMPLOYEES_SUCCESS', employees: employees });
+        console.log(addedEmployee);
     } catch (error) {
         yield put({ type: 'ADD_NEW_EMPLOYEE_FAILED', message: error.message });
     }

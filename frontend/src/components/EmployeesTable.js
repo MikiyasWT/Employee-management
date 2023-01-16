@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {FaFemale,FaMale,FaPowerOff,FaPlusCircle,FaTrash,FaUserCircle,FaUserEdit} from 'react-icons/fa'
 
 import { useDispatch,useSelector } from "react-redux/es/exports";
-import { getEmployees,deleteEmployee} from '../redux/actions/employees'
+import { getEmployees,deleteEmployee,addEmployee} from '../redux/actions/employees'
 import {showSideBar} from "../redux/actions/sideBar"
 import {showEditSideBar} from "../redux/actions/editSideBar"
 import ReactLoading from "react-loading";
@@ -100,15 +100,17 @@ export default function EmployeesTable(){
   
   const dispatch = useDispatch()
   const employees = useSelector(state => state.employees.employees)
+  const employee = useSelector(state => state.employees.employee)
+
   const editSideBarStatus = useSelector(state => state.editSideBar.editSideBar)
  
   const sidebarStatus = useSelector((state) => state.sideBar.sideBar)
   const loading = useSelector(state => state.employees.loading)
   const error = useSelector(state => state.employees.error)
-  useEffect(() => {
-    dispatch(getEmployees());
-  }, [dispatch,employees])
-
+ 
+    useEffect(()=>{
+       dispatch(getEmployees())
+    },[employee])
 
     return(
       <>
